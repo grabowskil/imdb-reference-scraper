@@ -51,17 +51,18 @@ def imdbScraper(titleLink, wait_time=5):
         print('404d :-(')
         return '404'
     
-def imdbCrawler(levelDepth, init_titleLink, wait_time=5):
+def stripTitle(title):
+    titleNestPos = title.index('(')
+    titleDotPos = title.index("'")
+    return title[titleDotPos + 1 : titleNestPos - 1]
+    
+def imdbCrawler(levelDepth=0, init_titleLink='/title/tt0133093', wait_time=5):
+    if levelDepth == None: levelDepth = 0
+    if init_titleLink == None: init_titleLink = '/title/tt0133093'
+    if wait_time == None: wait_time = 5
     div_list = imdbScraper(init_titleLink, wait_time)
     for _ in range(levelDepth):
         if div_list != '404':
             for div in div_list:
                 next_link = div[1]
                 imdbCrawler(levelDepth-1, next_link, wait_time)
-            
-def stripTitle(title):
-    titleNestPos = title.index('(')
-    titleDotPos = title.index("'")
-    return title[titleDotPos + 1 : titleNestPos - 1]
-            
-imdbCrawler(1,'/title/tt0133093')
