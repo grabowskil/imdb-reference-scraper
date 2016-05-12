@@ -30,6 +30,7 @@ def test_time():
     if elapsed_time < 4:
         sleep_time = 4 - elapsed_time
         print(sleep_time)
+        print("need to wait {:.0} seconds".format(sleep_time))
         time.sleep(sleep_time)
     print('done')
     
@@ -38,4 +39,4 @@ def test_slashR():
     print("another, another\r")
     print("different")
     
-test_slashR()
+test_time()

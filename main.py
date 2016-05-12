@@ -43,6 +43,7 @@ def imdbScraper(titleLink, wait_time=5):
         elapsed_time = time.time() - start_time
         if elapsed_time < wait_time:
             sleep_time = wait_time - elapsed_time
+            print("need to wait {:.0} seconds".format(sleep_time))
             time.sleep(sleep_time)
         
         return div_list
