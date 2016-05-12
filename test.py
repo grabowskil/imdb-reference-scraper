@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import time
 
 def test_none():
     r = requests.get('https://www.google.com')
@@ -21,4 +22,15 @@ def test_strStripper():
     print(tv)
     print(len(tv), len('Matrix'))
     
-test_none()
+def test_time():
+    start_time = time.time()
+    print(start_time)
+    elapsed_time = time.time()-start_time
+    print(elapsed_time)
+    if elapsed_time < 4:
+        sleep_time = 4 - elapsed_time
+        print(sleep_time)
+        time.sleep(sleep_time)
+    print('done')
+    
+test_time()

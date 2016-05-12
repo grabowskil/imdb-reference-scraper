@@ -1,9 +1,13 @@
 import requests
+import time
 from bs4 import BeautifulSoup
 import csv
 
-def imdbScraper(titleLink):
+def imdbScraper(titleLink, wait_time=5):
     r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
+    
+    start_time = time.time()
+    
     print("open new title")
     if r.status_code != 404:
         print("no 404")
@@ -26,13 +30,18 @@ def imdbScraper(titleLink):
             
             for div in ref_divs:
                 cntr += 1
-                print("{:.1%}".format(cntr/ref_divsCount))
+                print("{:.1%}\r".format(cntr/ref_divsCount))
                 if c == False:
                     div_list.append([div.a.contents, div.a['href']])
                 if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
                 
         print("writing in csv")
         writeCsv(title_str, div_list)
+        
+        elapsed_time = time.time() - start_time
+        if elapsed_time < wait_time:
+            sleep_time = wait_time - elapsed_time
+            time.sleep(sleep_time)
         
         return div_list
     else:
@@ -50,13 +59,13 @@ def writeCsv(title, div_list):
     writer.writerow(data)
     trgtFile.close()
     
-def imdbCrawler(levelDepth, init_titleLink):
-    div_list = imdbScraper(init_titleLink)
+def imdbCrawler(levelDepth, init_titleLink, wait_time=5):
+    div_list = imdbScraper(init_titleLink, wait_time)
     for _ in range(levelDepth):
         if div_list != '404':
             for div in div_list:
                 next_link = div[1]
-                imdbCrawler(levelDepth-1, next_link)
+                imdbCrawler(levelDepth-1, next_link, wait_time)
             
 def stripTitle(title):
     titleNestPos = title.index('(')
