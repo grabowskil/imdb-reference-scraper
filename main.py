@@ -1,0 +1,66 @@
+import requests
+from bs4 import BeautifulSoup
+import csv
+
+def imdbScraper(titleLink):
+    r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
+    print("open new title")
+    if r.status_code != 404:
+        print("no 404")
+        soup = BeautifulSoup(r.text, 'lxml')
+        
+        title_tag = soup.head.title.contents
+        title_str = stripTitle(str(title_tag))
+
+        ref_heading = soup.find('a', attrs={'name':'referenced_in'})
+        
+        div_list = []
+        
+        if ref_heading != None:
+        
+            ref_divs = ref_heading.find_next_siblings('div')
+            ref_divsCount = len(ref_divs)
+
+            c = False
+            cntr = 0
+            
+            for div in ref_divs:
+                cntr += 1
+                print("{:.1%}".format(cntr/ref_divsCount))
+                if c == False:
+                    div_list.append([div.a.contents, div.a['href']])
+                if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
+                
+        print("writing in csv")
+        writeCsv(title_str, div_list)
+        
+        return div_list
+    else:
+        print('404d :-(')
+        return '404'
+    
+def getRow():
+    rows = sum(1 for row in csv.reader(open('data.csv'))) + 1
+    return rows
+    
+def writeCsv(title, div_list):
+    trgtFile = open('data.csv', 'a', newline='')
+    writer = csv.writer(trgtFile, delimiter = ';')
+    data = [title, div_list, len(div_list)]
+    writer.writerow(data)
+    trgtFile.close()
+    
+def imdbCrawler(levelDepth, init_titleLink):
+    div_list = imdbScraper(init_titleLink)
+    for _ in range(levelDepth):
+        if div_list != '404':
+            for div in div_list:
+                next_link = div[1]
+                imdbCrawler(levelDepth-1, next_link)
+            
+def stripTitle(title):
+    titleNestPos = title.index('(')
+    titleDotPos = title.index("'")
+    return title[titleDotPos + 1 : titleNestPos - 1]
+            
+imdbCrawler(1,'/title/tt0133093')
