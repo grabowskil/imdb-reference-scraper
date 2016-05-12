@@ -38,7 +38,7 @@ def imdbScraper(titleLink, wait_time=5):
                 if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
                 
         print("writing in csv")
-        writeCsv(title_str, div_list)
+        acc_csv.writeCsv(title_str, div_list)
         
         elapsed_time = time.time() - start_time
         if elapsed_time < wait_time:
@@ -50,10 +50,6 @@ def imdbScraper(titleLink, wait_time=5):
     else:
         print('404d :-(')
         return '404'
-    
-def getRow():
-    rows = sum(1 for row in csv.reader(open('data.csv'))) + 1
-    return rows
     
 def imdbCrawler(levelDepth, init_titleLink, wait_time=5):
     div_list = imdbScraper(init_titleLink, wait_time)
@@ -68,4 +64,4 @@ def stripTitle(title):
     titleDotPos = title.index("'")
     return title[titleDotPos + 1 : titleNestPos - 1]
             
-#imdbCrawler(1,'/title/tt0133093')
+imdbCrawler(1,'/title/tt0133093')
