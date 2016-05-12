@@ -15,7 +15,9 @@ def imdbScraper(titleLink, wait_time=5):
         
         title_tag = soup.head.title.contents
         title_str = stripTitle(str(title_tag))
-
+        
+        print("new title = " + title_str)
+        
         ref_heading = soup.find('a', attrs={'name':'referenced_in'})
         
         div_list = []
