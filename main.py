@@ -1,7 +1,7 @@
 import requests
 import time
 from bs4 import BeautifulSoup
-import csv
+import acc_csv
 
 def imdbScraper(titleLink, wait_time=5):
     r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
@@ -55,13 +55,6 @@ def getRow():
     rows = sum(1 for row in csv.reader(open('data.csv'))) + 1
     return rows
     
-def writeCsv(title, div_list):
-    trgtFile = open('data.csv', 'a', newline='')
-    writer = csv.writer(trgtFile, delimiter = ';')
-    data = [title, div_list, len(div_list)]
-    writer.writerow(data)
-    trgtFile.close()
-    
 def imdbCrawler(levelDepth, init_titleLink, wait_time=5):
     div_list = imdbScraper(init_titleLink, wait_time)
     for _ in range(levelDepth):
@@ -75,4 +68,4 @@ def stripTitle(title):
     titleDotPos = title.index("'")
     return title[titleDotPos + 1 : titleNestPos - 1]
             
-imdbCrawler(1,'/title/tt0133093')
+#imdbCrawler(1,'/title/tt0133093')
