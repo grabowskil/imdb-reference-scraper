@@ -33,4 +33,9 @@ def test_time():
         time.sleep(sleep_time)
     print('done')
     
-test_time()
+def test_slashR():
+    print("something, something\r", end='\r')
+    print("another, another\r")
+    print("different")
+    
+test_slashR()

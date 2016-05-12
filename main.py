@@ -32,7 +32,7 @@ def imdbScraper(titleLink, wait_time=5):
             
             for div in ref_divs:
                 cntr += 1
-                print("{:.1%}\r".format(cntr/ref_divsCount))
+                print("{:.1%}".format(cntr/ref_divsCount), end='\r')
                 if c == False:
                     div_list.append([div.a.contents, div.a['href']])
                 if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
