@@ -1,5 +1,5 @@
 import argparse
-import main
+from crawler import main
 
 parser = argparse.ArgumentParser(description='scrape references from imdb')
 parser.add_argument('-d', '--levelDepth', type=int, help='depth, the crawler should go. Watch out: depth >0 will take a long time, which increases exponentially!')

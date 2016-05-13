@@ -1,7 +1,7 @@
 import requests
 import time
 from bs4 import BeautifulSoup
-import acc_csv
+from . import acc_csv
 
 def imdbScraper(titleLink, wait_time=5):
     r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
@@ -54,7 +54,7 @@ def imdbScraper(titleLink, wait_time=5):
 def stripTitle(title):
     titleQuotPos = title.index("'") if "'" in title else None
     titleHypPos = title.index('-') if '-' in title else None
-    if titleQuotPos == None and titleHypPos ==None:
+    if titleQuotPos == None and titleHypPos == None:
         return title
     elif titleQuotPos == None:
         return title[: titleHypPos - 1]
@@ -62,6 +62,7 @@ def stripTitle(title):
         return title[titleQuotPos + 1 : titleHypPos - 1]
     
 def imdbCrawler(levelDepth=0, init_titleLink='/title/tt0133093', wait_time=5):
+    print("level of Depth: " + str(levelDepth) + " initial title Link: " + str(init_titleLink) + " wait time: " + str(wait_time))
     if levelDepth == None: levelDepth = 0
     if init_titleLink == None: init_titleLink = '/title/tt0133093'
     if wait_time == None: wait_time = 5
