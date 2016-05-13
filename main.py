@@ -52,14 +52,14 @@ def imdbScraper(titleLink, wait_time=5):
         return '404'
     
 def stripTitle(title):
-    titleDotPos = title.index("'") if "'" in title else None
+    titleQuotPos = title.index("'") if "'" in title else None
     titleHypPos = title.index('-') if '-' in title else None
-    if titleDotPos == None and titleHypPos ==None:
+    if titleQuotPos == None and titleHypPos ==None:
         return title
-    elif titleDotPos == None:
+    elif titleQuotPos == None:
         return title[: titleHypPos - 1]
     else:
-        return title[titleDotPos + 1 : titleHypPos - 1]
+        return title[titleQuotPos + 1 : titleHypPos - 1]
     
 def imdbCrawler(levelDepth=0, init_titleLink='/title/tt0133093', wait_time=5):
     if levelDepth == None: levelDepth = 0
