@@ -7,13 +7,13 @@ def getRows():
     rows = sum(1 for row in csv.reader(open('data.csv'))) + 1
     return rows
 
-def getRow(title):
+def getRow(link:
     reader = csv.reader(open('data.csv'), delimiter=';')
     for row in reader:
-        if row[0] == title:
+        if row[3] == title:
             return row
             
-def getDivList(title):
+def getDivList(link):
     div_list = literal_eval(getRow(title)[1])
     return div_list   
     
@@ -28,10 +28,10 @@ def titleInList(title):
         return False
         
 def linkInList(link):
+    reader = csv.reader(open('data.csv'), delimiter=';')
     link_list = []
     for row in reader:
-        for link in row[3]
-            link_list.append(link)
+        link_list.append(row[3])
     if link in link_list:
         return True
     else:

@@ -46,13 +46,12 @@ def imdbScraper(titleLink, wait_time=5):
                     print("request: need to wait {:.0} seconds".format(sleep_time))
                     time.sleep(sleep_time)
         else:
-            print("scraper: known link, just parsing div_list")
-            div_list = acc_csv.getDivList(title_str)
-        
-        return div_list
+            print('request: 404')
+            return '404'
     else:
-        print('request: 404')
-        return '404'
+        print("scraper: known link, just parsing div_list")
+        div_list = acc_csv.getDivList(titleLink)
+        return div_list
     
 def stripTitle(title):
     titleQuotPos = title.index("'") if "'" in title else None
