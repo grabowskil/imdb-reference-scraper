@@ -10,11 +10,11 @@ def getRows():
 def getRow(link):
     reader = csv.reader(open('data.csv'), delimiter=';')
     for row in reader:
-        if row[3] == title:
+        if row[3] == link:
             return row
             
 def getDivList(link):
-    div_list = literal_eval(getRow(title)[1])
+    div_list = literal_eval(getRow(link)[1])
     return div_list   
     
 def titleInList(title):
