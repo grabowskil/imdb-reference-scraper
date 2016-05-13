@@ -44,7 +44,7 @@ def imdbScraper(titleLink, wait_time=5, all=False):
             sleep_time = wait_time - elapsed_time
             print('request: need to wait ' + str(int(sleep_time)) + ' seconds')
             time.sleep(sleep_time)
-        print('writer: data')
+        print('writer : writing to data.csv')
         start_time = time.time()
         acc_csv.writeCsv(title_str, div_list, titleLink)
         write_time = time.time() - start_time
