@@ -63,7 +63,7 @@ def stripTitle(title):
         return title[titleNestPos + 2 : titleHypPos - 1]
         
 def contExcluded(div_content):
-    ex_list = ['(TV Episode', '(Video', '(TV Movie']
+    ex_list = ['(TV Episode', '(Video', '(TV Movie', '(TV Series']
     c = False
     for ex in ex_list:
         if ex in div_content:
