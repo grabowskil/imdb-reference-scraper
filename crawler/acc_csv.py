@@ -13,7 +13,7 @@ def getRow(title):
             return row
             
 def getDivList(title):
-    div_list = getRow(title)[1][1]
+    div_list = getRow(title)[1]
     return div_list   
     
 def titleInList(title):
