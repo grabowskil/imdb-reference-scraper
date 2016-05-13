@@ -38,7 +38,7 @@ def imdbScraper(titleLink, wait_time=5):
                     if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
                 
                 print("scraper: writing in csv")
-                acc_csv.writeCsv(title_str, div_list)
+                acc_csv.writeCsv(title_str, div_list, titleLink)
         else:
             print("scraper: known title, just parsing div_list")
             div_list = acc_csv.getDivList(title_str)
