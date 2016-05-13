@@ -3,7 +3,7 @@ import time
 from bs4 import BeautifulSoup
 from . import acc_csv
 
-def imdbScraper(titleLink, wait_time=5):
+def imdbScraper(titleLink, wait_time=5, all=False):
     if acc_csv.linkInList(titleLink) == False:
         r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
         
@@ -16,7 +16,7 @@ def imdbScraper(titleLink, wait_time=5):
             
             title_tag = soup.head.title.contents
             title_str = stripTitle(str(title_tag))
-            if contExcluded(title_str) == False:
+            if contExcluded(title_str) == False or all == True:
                 print("scraper: next title '" + title_str + "'")
                 ref_heading = soup.find('a', attrs={'name':'referenced_in'})
                 
@@ -75,16 +75,17 @@ def contExcluded(div_content):
     return c
             
     
-def imdbCrawler(levelDepth=0, init_titleLink='/title/tt0133093', wait_time=5):
+def imdbCrawler(levelDepth=0, init_titleLink='/title/tt0133093', wait_time=5, all=False):
     if levelDepth == None: levelDepth = 0
     if init_titleLink == None: init_titleLink = '/title/tt0133093'
     if wait_time == None: wait_time = 5
+    if all == None: all = False
     #print("level of Depth: " + str(levelDepth) + " initial title Link: " + str(init_titleLink) + " wait time: " + str(wait_time))
     print("crawler: start, level: " + str(levelDepth))
-    div_list = imdbScraper(init_titleLink, wait_time)
+    div_list = imdbScraper(init_titleLink, wait_time, all)
     for _ in range(levelDepth):
         if div_list != '404':
             for div in div_list:
                 next_link = div[1]
-                imdbCrawler(levelDepth-1, next_link, wait_time)
+                imdbCrawler(levelDepth-1, next_link, wait_time, all)
     print("crawler: done, level: " + str(levelDepth))
