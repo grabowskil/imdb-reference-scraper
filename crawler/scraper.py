@@ -11,7 +11,7 @@ def imdbScraper(titleLink, wait_time=5, all=False):
         title_str = 'not retrieved yet'
         print('scraper: open new title', end='\r')
         if r.status_code != 404:
-            print('request: new title opened'')
+            print('request: new title opened')
             soup = BeautifulSoup(r.text, 'lxml')
             title_tag = soup.head.title.contents
             title_str = stripTitle(str(title_tag))
