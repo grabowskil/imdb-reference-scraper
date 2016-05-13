@@ -9,9 +9,9 @@ def imdbScraper(titleLink, wait_time=5):
         
         start_time = time.time()
         
-        print("scraper: open new title")
+        print("scraper: open new title", end='\r')
         if r.status_code != 404:
-            print("request: no 404")
+            print("request: new title opened")
             soup = BeautifulSoup(r.text, 'lxml')
             
             title_tag = soup.head.title.contents
