@@ -37,9 +37,9 @@ def titleInList(title):
 #    else:
 #        return False
     
-def writeCsv(title, div_list):
+def writeCsv(title, div_list, link):
     trgtFile = open('data.csv', 'a', newline='')
     writer = csv.writer(trgtFile, delimiter = ';')
-    data = [title, div_list, len(div_list)]
+    data = [title, div_list, len(div_list), link]
     writer.writerow(data)
     trgtFile.close()
