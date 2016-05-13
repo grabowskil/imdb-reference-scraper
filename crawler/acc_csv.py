@@ -1,11 +1,21 @@
 import csv
+import sys
 
-def getRow():
+def getRows():
     rows = sum(1 for row in csv.reader(open('data.csv'))) + 1
     return rows
+
+def getRow(title):
+    reader = csv.reader(open('data.csv'), delimiter=';')
+    for row in reader:
+        if row[0] == title:
+            return row
+            
+def getDivList(title):
+    div_list = getRow(title)[1][1]
+    return div_list   
     
-def inList(title):
-    included_cols = [3]
+def titleInList(title):
     reader = csv.reader(open('data.csv'), delimiter=';')
     title_list = []
     for row in reader:
@@ -14,6 +24,16 @@ def inList(title):
         return True
     else:
         return False
+        
+#def linkInList(link):
+#    link_list = []
+#    for row in reader:
+#        for link in row[1][1]
+#            link_list.append(link)
+#    if link in link_list:
+#        return True
+#    else:
+#        return False
     
 def writeCsv(title, div_list):
     trgtFile = open('data.csv', 'a', newline='')

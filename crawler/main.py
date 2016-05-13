@@ -17,31 +17,31 @@ def imdbScraper(titleLink, wait_time=5):
         title_str = stripTitle(str(title_tag))
         
         print("scraper: next title '" + title_str + "'")
-        
-        ref_heading = soup.find('a', attrs={'name':'referenced_in'})
-        
-        div_list = []
-        
-        if ref_heading != None:
-        
-            ref_divs = ref_heading.find_next_siblings('div')
-            ref_divsCount = len(ref_divs)
-
-            c = False
-            cntr = 0
+        if acc_csv.titleInList(title_str) == False:
+            ref_heading = soup.find('a', attrs={'name':'referenced_in'})
             
-            for div in ref_divs:
-                cntr += 1
-                print("loading: {:.1%}".format(cntr/ref_divsCount), end='\r')
-                if c == False:
-                    div_list.append([div.a.contents, div.a['href']])
-                if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
+            div_list = []
+            
+            if ref_heading != None:
+            
+                ref_divs = ref_heading.find_next_siblings('div')
+                ref_divsCount = len(ref_divs)
+
+                c = False
+                cntr = 0
                 
-        if acc_csv.inList(title_str) == False:
-            print("scraper: writing in csv")
-            acc_csv.writeCsv(title_str, div_list)
+                for div in ref_divs:
+                    cntr += 1
+                    print("loading: {:.1%}".format(cntr/ref_divsCount), end='\r')
+                    if c == False:
+                        div_list.append([div.a.contents, div.a['href']])
+                    if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
+                
+                print("scraper: writing in csv")
+                acc_csv.writeCsv(title_str, div_list)
         else:
             print("scraper: known title, just parsing div_list")
+            div_list = acc_csv.getDivList(title_str)
         
         elapsed_time = time.time() - start_time
         if elapsed_time < wait_time:
