@@ -15,4 +15,4 @@ def imdbCrawler(levelDepth=0, init_titleLink='/title/tt0133093', wait_time=5, al
                 next_link = div[1]
                 imdbCrawler(levelDepth-1, next_link, wait_time, all)
     c = len(div_list)
-    print("crawler: " + str(c) + "done on level " + str(levelDepth))
+    print("crawler: " + str(c) + " done on level " + str(levelDepth))
