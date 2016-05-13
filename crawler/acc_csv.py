@@ -7,7 +7,7 @@ def getRows():
     rows = sum(1 for row in csv.reader(open('data.csv'))) + 1
     return rows
 
-def getRow(link:
+def getRow(link):
     reader = csv.reader(open('data.csv'), delimiter=';')
     for row in reader:
         if row[3] == title:
