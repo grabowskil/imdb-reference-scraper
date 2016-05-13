@@ -66,7 +66,7 @@ def stripTitle(title):
         return title[titleQuotPos + 1 : titleHypPos - 1]
         
 def contExcluded(div_content):
-    ex_list = ['(TV Episode', '(Video']
+    ex_list = ['(TV Episode', '(Video', '(TV Movie']
     c = False
     for ex in ex_list:
         if ex in div_content:
@@ -74,7 +74,6 @@ def contExcluded(div_content):
             break
     return c
             
-    
 def imdbCrawler(levelDepth=0, init_titleLink='/title/tt0133093', wait_time=5, all=False):
     if levelDepth == None: levelDepth = 0
     if init_titleLink == None: init_titleLink = '/title/tt0133093'
