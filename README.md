@@ -3,11 +3,10 @@
 #### release-milestones
 - [x] creating a scraper for any imdb movieconnections-page
 - [x] getting the scraper to identify explicitly "Referenced in"-connections
-- [x] creating a crawler to automatize data-collecting
+- [x] creating a crawler to automatize data-collection
 - [x] writing the collected data into a .csv
 - [x] accessing the scraper via argparse
 - [x] rudimentary error-handling
-- [ ] compiling a stable binary
 - [ ] advanced error-handling
 - [ ] creating an analyzer for collected data
 
