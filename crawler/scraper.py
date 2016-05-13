@@ -32,14 +32,14 @@ def imdbScraper(titleLink, wait_time=5, all=False):
                         if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
                     print("scraper: writing in csv")
                     acc_csv.writeCsv(title_str, div_list, titleLink)
-            elapsed_time = time.time() - start_time
-            if elapsed_time < wait_time:
-                sleep_time = wait_time - elapsed_time
-                print("requests: need to wait {:.1} seconds".format(sleep_time))
-                time.sleep(sleep_time)
         else:
             print('request: 404')
             return '404'
+        elapsed_time = time.time() - start_time
+        if elapsed_time < wait_time:
+            sleep_time = wait_time - elapsed_time
+            print("requests: need to wait {:.1} seconds".format(sleep_time))
+            time.sleep(sleep_time)
     else:
         print("scraper: known link, just parsing div_list")
         div_list = acc_csv.getDivList(titleLink)
