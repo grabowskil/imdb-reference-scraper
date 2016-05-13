@@ -1,7 +1,7 @@
 import requests
 import time
 from bs4 import BeautifulSoup
-from . import acc_csv
+import acc_csv
 
 def imdbScraper(titleLink, wait_time=5):
     r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
@@ -37,8 +37,11 @@ def imdbScraper(titleLink, wait_time=5):
                     div_list.append([div.a.contents, div.a['href']])
                 if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
                 
-        print("writing in csv")
-        acc_csv.writeCsv(title_str, div_list)
+        if acc_csv.inList(title_str) == False:
+            print("writing in csv")
+            acc_csv.writeCsv(title_str, div_list)
+        else:
+            print("known title, just parsing div_list")
         
         elapsed_time = time.time() - start_time
         if elapsed_time < wait_time:
@@ -62,7 +65,7 @@ def stripTitle(title):
         return title[titleQuotPos + 1 : titleHypPos - 1]
     
 def imdbCrawler(levelDepth=0, init_titleLink='/title/tt0133093', wait_time=5):
-    print("level of Depth: " + str(levelDepth) + " initial title Link: " + str(init_titleLink) + " wait time: " + str(wait_time))
+    #print("level of Depth: " + str(levelDepth) + " initial title Link: " + str(init_titleLink) + " wait time: " + str(wait_time))
     if levelDepth == None: levelDepth = 0
     if init_titleLink == None: init_titleLink = '/title/tt0133093'
     if wait_time == None: wait_time = 5
