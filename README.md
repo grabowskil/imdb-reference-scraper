@@ -11,7 +11,7 @@
 - [ ] advanced error-handling
 - [ ] creating an analyzer for collected data
 
-#### documentation (for v0.2-alpha)
+#### documentation (for v0.5-beta)
 1. download and unzip the source-code into a path of choice
 2. open the terminal and navigate to the chosen path
 3. run the scraper by `$python3 imdbRefScraper.py [-args, ...]`
@@ -25,3 +25,4 @@ optional | `-h`| `--help` | show documentary
 mandatory | `-d`| `--levelDepth`| how deep should the crawler follow the link-tree? (exponantial!)
 optional | `-iL` | `--initialLink`| seed-link, from which the crawler starts scraping format: `'title/tt0000000'` (Default: Matrix)
 optional | `-t` | `--time` | how many seconds should the scraper wait between every request? (Default: 5)
+optional | `-a` | `--all` | if parsed: tv shows, videos and games get crawled
