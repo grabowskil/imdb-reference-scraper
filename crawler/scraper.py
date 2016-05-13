@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from . import acc_csv
 
 def imdbScraper(titleLink, wait_time=5, all=False):
+    div_list = []
     if acc_csv.linkInList(titleLink) == False:
         r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
         start_time = time.time()
@@ -16,7 +17,6 @@ def imdbScraper(titleLink, wait_time=5, all=False):
             if contExcluded(title_str) == False or all == True:
                 print("scraper: next title '" + title_str + "'")
                 ref_heading = soup.find('a', attrs={'name':'referenced_in'})
-                div_list = []
                 if ref_heading != None:
                     ref_divs = ref_heading.find_next_siblings('div')
                     ref_divsCount = len(ref_divs)
@@ -32,6 +32,11 @@ def imdbScraper(titleLink, wait_time=5, all=False):
                         if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
                     print("scraper: writing in csv")
                     acc_csv.writeCsv(title_str, div_list, titleLink)
+                else:
+                    print('scraper: skipped, not referenced')
+            else:
+                print('scraper: skipped, exclude')
+                
         else:
             print('request: 404')
             return '404'
@@ -40,6 +45,7 @@ def imdbScraper(titleLink, wait_time=5, all=False):
             sleep_time = wait_time - elapsed_time
             print("requests: need to wait {:.1} seconds".format(sleep_time))
             time.sleep(sleep_time)
+        return div_list
     else:
         print("scraper: known link, just parsing div_list")
         div_list = acc_csv.getDivList(titleLink)
