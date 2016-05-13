@@ -9,7 +9,7 @@ def imdbCrawler(levelDepth=0, init_titleLink='/title/tt0133093', wait_time=5, al
     print("crawler: start, level: " + str(levelDepth))
     div_list = scraper.imdbScraper(init_titleLink, wait_time, all)
     for _ in range(levelDepth):
-        if div_list != '404':
+        if div_list != '404' and div_list != None:
             for div in div_list:
                 next_link = div[1]
                 scraper.imdbCrawler(levelDepth-1, next_link, wait_time, all)
