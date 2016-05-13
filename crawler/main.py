@@ -16,35 +16,37 @@ def imdbScraper(titleLink, wait_time=5):
             
             title_tag = soup.head.title.contents
             title_str = stripTitle(str(title_tag))
-            
-            print("scraper: next title '" + title_str + "'")
-            ref_heading = soup.find('a', attrs={'name':'referenced_in'})
-            
-            div_list = []
-            
-            if ref_heading != None:
-            
-                ref_divs = ref_heading.find_next_siblings('div')
-                ref_divsCount = len(ref_divs)
+            if contExcluded(title_str) == False:
+                print("scraper: next title '" + title_str + "'")
+                ref_heading = soup.find('a', attrs={'name':'referenced_in'})
+                
+                div_list = []
+                
+                if ref_heading != None:
+                
+                    ref_divs = ref_heading.find_next_siblings('div')
+                    ref_divsCount = len(ref_divs)
 
-                c = False
-                cntr = 0
+                    c = False
+                    cntr = 0
+                    
+                    for div in ref_divs:
+                        cntr += 1
+                        print("loading: {:.1%}".format(cntr/ref_divsCount), end='\r')
+                        if c == False:
+                            div_content = div.a.contents
+                            div_href = div.a['href']
+                            div_list.append([div_content, div_href])
+                        if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
+                    
+                    print("scraper: writing in csv")
+                    acc_csv.writeCsv(title_str, div_list, titleLink)
                 
-                for div in ref_divs:
-                    cntr += 1
-                    print("loading: {:.1%}".format(cntr/ref_divsCount), end='\r')
-                    if c == False:
-                        div_list.append([div.a.contents, div.a['href']])
-                    if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
-                
-                print("scraper: writing in csv")
-                acc_csv.writeCsv(title_str, div_list, titleLink)
-                
-                elapsed_time = time.time() - start_time
-                if elapsed_time < wait_time:
-                    sleep_time = wait_time - elapsed_time
-                    print("request: need to wait {:.0} seconds".format(sleep_time))
-                    time.sleep(sleep_time)
+            elapsed_time = time.time() - start_time
+            if elapsed_time < wait_time:
+                sleep_time = wait_time - elapsed_time
+                print("request: need to wait {:.0} seconds".format(sleep_time))
+                time.sleep(sleep_time)
         else:
             print('request: 404')
             return '404'
@@ -62,6 +64,16 @@ def stripTitle(title):
         return title[: titleHypPos - 1]
     else:
         return title[titleQuotPos + 1 : titleHypPos - 1]
+        
+def contExcluded(div_content):
+    ex_list = ['(TV Episode', '(Video']
+    c = False
+    for ex in ex_list:
+        if ex in div_content:
+            c = True
+            break
+    return c
+            
     
 def imdbCrawler(levelDepth=0, init_titleLink='/title/tt0133093', wait_time=5):
     if levelDepth == None: levelDepth = 0
