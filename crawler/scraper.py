@@ -8,6 +8,7 @@ def imdbScraper(titleLink, wait_time=5, all=False):
     if acc_csv.linkInList(titleLink) == False:
         r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
         start_time = time.time()
+        title_str = 'not retrieved yet'
         print("scraper: open new title", end='\r')
         if r.status_code != 404:
             print("request: new title opened")
@@ -31,7 +32,6 @@ def imdbScraper(titleLink, wait_time=5, all=False):
                             div_list.append([div_content, div_href])
                         if div.next_sibling.next_sibling == soup.find('a', attrs={'name':'spoofed_in'}): c = True
                     print("scraper: writing in csv")
-                    acc_csv.writeCsv(title_str, div_list, titleLink)
                 else:
                     print('scraper: skipped, not referenced')
             else:
@@ -45,6 +45,7 @@ def imdbScraper(titleLink, wait_time=5, all=False):
             sleep_time = wait_time - elapsed_time
             print("request: need to wait {:.1} seconds".format(sleep_time))
             time.sleep(sleep_time)
+        acc_csv.writeCsv(title_str, div_list, titleLink)
         return div_list
     else:
         print("scraper: known link, just parsing div_list")
