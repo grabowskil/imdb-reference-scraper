@@ -12,4 +12,5 @@ args = parser.parse_args()
 if args.levelDepth == None:
     parser.parse_args(['-h'])
 else:
+    print("crawler will be launched with '-a' " + str(args.all))
     main.imdbCrawler(args.levelDepth, args.initialLink, args.time, args.all)
