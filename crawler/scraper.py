@@ -46,14 +46,14 @@ def imdbScraper(titleLink, wait_time=5, all=False):
         return div_list
     
 def stripTitle(title):
-    titleQuotPos = title.index("'") if "'" in title else None
     titleHypPos = title.index('-') if '-' in title else None
-    if titleQuotPos == None and titleHypPos == None:
+    titleNestPos = title.index('[') if '[' in title else None
+    if titleNestPos == None and titleHypPos == None:
         return title
-    elif titleQuotPos == None:
+    elif titleNestPos == None:
         return title[: titleHypPos - 1]
     else:
-        return title[titleQuotPos + 1 : titleHypPos - 1]
+        return title[titleNestPos + 2 : titleHypPos - 1]
         
 def contExcluded(div_content):
     ex_list = ['(TV Episode', '(Video', '(TV Movie']
