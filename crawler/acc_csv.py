@@ -27,15 +27,15 @@ def titleInList(title):
     else:
         return False
         
-#def linkInList(link):
-#    link_list = []
-#    for row in reader:
-#        for link in row[1][1]
-#            link_list.append(link)
-#    if link in link_list:
-#        return True
-#    else:
-#        return False
+def linkInList(link):
+    link_list = []
+    for row in reader:
+        for link in row[3]
+            link_list.append(link)
+    if link in link_list:
+        return True
+    else:
+        return False
     
 def writeCsv(title, div_list, link):
     trgtFile = open('data.csv', 'a', newline='')

@@ -4,20 +4,20 @@ from bs4 import BeautifulSoup
 from . import acc_csv
 
 def imdbScraper(titleLink, wait_time=5):
-    r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
-    
-    start_time = time.time()
-    
-    print("scraper: open new title")
-    if r.status_code != 404:
-        print("request: no 404")
-        soup = BeautifulSoup(r.text, 'lxml')
+    if acc_csv.linkInList(titleLink) == False:
+        r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
         
-        title_tag = soup.head.title.contents
-        title_str = stripTitle(str(title_tag))
+        start_time = time.time()
         
-        print("scraper: next title '" + title_str + "'")
-        if acc_csv.titleInList(title_str) == False:
+        print("scraper: open new title")
+        if r.status_code != 404:
+            print("request: no 404")
+            soup = BeautifulSoup(r.text, 'lxml')
+            
+            title_tag = soup.head.title.contents
+            title_str = stripTitle(str(title_tag))
+            
+            print("scraper: next title '" + title_str + "'")
             ref_heading = soup.find('a', attrs={'name':'referenced_in'})
             
             div_list = []
@@ -39,15 +39,15 @@ def imdbScraper(titleLink, wait_time=5):
                 
                 print("scraper: writing in csv")
                 acc_csv.writeCsv(title_str, div_list, titleLink)
+                
+                elapsed_time = time.time() - start_time
+                if elapsed_time < wait_time:
+                    sleep_time = wait_time - elapsed_time
+                    print("request: need to wait {:.0} seconds".format(sleep_time))
+                    time.sleep(sleep_time)
         else:
-            print("scraper: known title, just parsing div_list")
+            print("scraper: known link, just parsing div_list")
             div_list = acc_csv.getDivList(title_str)
-        
-        elapsed_time = time.time() - start_time
-        if elapsed_time < wait_time:
-            sleep_time = wait_time - elapsed_time
-            print("request: need to wait {:.0} seconds".format(sleep_time))
-            time.sleep(sleep_time)
         
         return div_list
     else:
