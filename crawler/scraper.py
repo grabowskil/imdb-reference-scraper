@@ -6,7 +6,9 @@ from . import acc_csv
 def imdbScraper(titleLink, wait_time=5, all=False):
     div_list = []
     if acc_csv.linkInList(titleLink) == False:
-        r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
+        s = requests.session()
+        s.keep_alive = False
+        r = s.get('http://www.imdb.com' + titleLink + '/movieconnections')
         start_time = time.time()
         title_str = 'not retrieved yet'
         print('scraper: open new title', end='\r')
