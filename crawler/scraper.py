@@ -6,12 +6,14 @@ from . import acc_csv
 def imdbScraper(titleLink, wait_time=5, all=False):
     div_list = []
     if acc_csv.linkInList(titleLink) == False:
-        r = requests.get('http://www.imdb.com' + titleLink + '/movieconnections')
+        s = requests.session()
+        s.keep_alive = False
+        r = s.get('http://www.imdb.com' + titleLink + '/movieconnections')
         start_time = time.time()
         title_str = 'not retrieved yet'
         print('scraper: open new title', end='\r')
         if r.status_code != 404:
-            print('request: new title opened'')
+            print('request: new title opened')
             soup = BeautifulSoup(r.text, 'lxml')
             title_tag = soup.head.title.contents
             title_str = stripTitle(str(title_tag))
@@ -44,7 +46,7 @@ def imdbScraper(titleLink, wait_time=5, all=False):
             sleep_time = wait_time - elapsed_time
             print('request: need to wait ' + str(int(sleep_time)) + ' seconds')
             time.sleep(sleep_time)
-        print('writer: data')
+        print('writer : writing to data.csv')
         start_time = time.time()
         acc_csv.writeCsv(title_str, div_list, titleLink)
         write_time = time.time() - start_time
@@ -67,7 +69,7 @@ def stripTitle(title):
         return title[titleNestPos + 2 : titleHypPos - 1]
         
 def contExcluded(div_content):
-    ex_list = ['(TV Episode', '(Video', '(TV Movie', '(TV Series']
+    ex_list = ['(TV Episode', '(Video', '(TV ']
     c = False
     for ex in ex_list:
         if ex in div_content:
