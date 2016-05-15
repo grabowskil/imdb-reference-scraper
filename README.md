@@ -21,7 +21,7 @@
 condition | argument (short) | argument (long) | comment
 --------- | ---------------- | --------------- | -------
 optional | `-h`| `--help` | show documentary
-mandatory | `-d`| `--levelDepth`| how deep should the crawler follow the link-tree? (exponantial!)
+mandatory | `-d`| `--levelDepth`| how deep should the crawler follow the link-tree? (run time increases exponentially!)
 optional | `-iL` | `--initialLink`| seed-link, from which the crawler starts scraping format: `'title/tt0000000'` (Default: Matrix)
 optional | `-t` | `--time` | how many seconds should the scraper wait between every request? (Default: 5)
 optional | `-a` | `--all` | if parsed: tv shows, videos and games get crawled
