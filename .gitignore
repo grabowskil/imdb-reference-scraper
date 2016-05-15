@@ -64,3 +64,4 @@ target/
 # added
 source/*
 .DS_Store
+*.tar.gz
