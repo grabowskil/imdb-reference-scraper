@@ -9,4 +9,4 @@ args = parser.parse_args()
 if args.print == True:
     main.printTopTen()
 else:
-    parser.parse_args(['-h'])
+    parser.parse_args(['-p'])
