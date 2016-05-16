@@ -6,7 +6,4 @@ parser.add_argument('-p', '--print', action='store_true', help="if parsed 'true'
 
 args = parser.parse_args()
 
-if args.print == True:
-    main.printTopTen()
-else:
-    parser.parse_args(['-p'])
+main.printTopTen()
