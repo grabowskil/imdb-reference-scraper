@@ -65,3 +65,4 @@ target/
 source/*
 .DS_Store
 *.tar.gz
+.vscode/

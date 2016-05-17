@@ -6,4 +6,7 @@ parser.add_argument('-p', '--print', type=int, help="prints the defined number o
 
 args = parser.parse_args()
 
-main.printTopTen(args.print)
+if args.print == None:
+    parser.parse_args(['-h'])
+else:
+    main.printTop(args.print)
