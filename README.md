@@ -1,15 +1,5 @@
 # IMDB Reference Scraper
 
-#### release-milestones
-- [x] creating a scraper for any imdb movieconnections-page
-- [x] getting the scraper to identify explicitly "Referenced in"-connections
-- [x] creating a crawler to automatize data-collection
-- [x] writing the collected data into a .csv
-- [x] accessing the scraper via argparse
-- [x] rudimentary error-handling
-- [ ] advanced error-handling
-- [ ] creating an analyzer for collected data
-
 #### documentation (for v0.5-beta)
 1. download and unzip the source-code into a path of choice
 2. open the terminal and navigate to the chosen path
