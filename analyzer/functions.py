@@ -17,10 +17,9 @@ def getName(link):
 
 def getTop(num_val):
     div_list = getList()
-    topTen_list = []
+    top_list = []
     for item in div_list[-num_val:]:
-        topTen_list.append(item)
-    topTen_list.sort(key = lambda x: int(x[2]), reverse=True)
-    for top in topTen_list:
-        print(top[0] + ": " + top[2])
+        top_list.append(item)
+    top_list.sort(key = lambda x: int(x[2]), reverse=True)
+    return top_list
     
