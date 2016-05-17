@@ -14,7 +14,6 @@
 1. download and unzip the source-code into a path of choice
 2. open the terminal and navigate to the chosen path
 3. run the scraper by `$python3 imdbRefScraper.py [-args, ...]`
-  * `$python 3 imdbRefScraper.py -h` shows the documentation
 4. run the analyzer by `$python3 imdbRefAnalyzer.py [-args, ...]`
 
 ##### list of arguments
