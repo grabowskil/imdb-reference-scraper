@@ -2,8 +2,8 @@ import argparse
 from analyzer import main
 
 parser = argparse.ArgumentParser(description='analyze scraped references from imdb')
-parser.add_argument('-p', '--print', action='store_true', help="if parsed 'true', the top 10 movies from data.csv get printed")
+parser.add_argument('-p', '--print', type=int, help="prints the defined number of movies")
 
 args = parser.parse_args()
 
-main.printTopTen()
+main.printTopTen(args.print)
