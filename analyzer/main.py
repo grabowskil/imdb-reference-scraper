@@ -1,4 +1,4 @@
 from . import functions
 
-def printTopTen():
-    functions.getTopTen()
+def printTop(num_val):
+    functions.getTop(num_val)
