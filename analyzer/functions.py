@@ -15,10 +15,10 @@ def getName(link):
         if row[3] == link:
             return row[0]
 
-def getTopTen():
+def getTop(num_val):
     div_list = getList()
     topTen_list = []
-    for item in div_list[-10:]:
+    for item in div_list[-num_val:]:
         topTen_list.append(item)
     topTen_list.sort(key = lambda x: int(x[2]), reverse=True)
     for top in topTen_list:
