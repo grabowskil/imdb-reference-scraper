@@ -19,7 +19,7 @@
 
 ##### list of arguments
 
-imdbRefScraper.py
+######imdbRefScraper.py
 condition | argument (short) | argument (long) | comment
 --------- | ---------------- | --------------- | -------
 optional | `-h`| `--help` | show documentary
@@ -29,7 +29,7 @@ optional | `-t` | `--time` | how many seconds should the scraper wait between ev
 optional | `-a` | `--all` | if parsed: tv shows, videos and games get crawled
 optional | `-r`| `--recursive`| if parsed: crawler tries five additional times to call scraper in case of urllib Error -3
 
-imdbRefAnalyzer.py
+######imdbRefAnalyzer.py
 condition | argument (short) | argument (long) | comment
 --------- | ---------------- | --------------- | -------
 optional | `-h`| `--help` | show documentary
