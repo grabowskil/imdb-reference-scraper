@@ -15,9 +15,11 @@
 2. open the terminal and navigate to the chosen path
 3. run the scraper by `$python3 imdbRefScraper.py [-args, ...]`
   * `$python 3 imdbRefScraper.py -h` shows the documentation
+4. run the analyzer by `$python3 imdbRefAnalyzer.py [-args, ...]`
 
 ##### list of arguments
 
+imdbRefScraper.py
 condition | argument (short) | argument (long) | comment
 --------- | ---------------- | --------------- | -------
 optional | `-h`| `--help` | show documentary
@@ -26,3 +28,9 @@ optional | `-iL` | `--initialLink`| seed-link, from which the crawler starts scr
 optional | `-t` | `--time` | how many seconds should the scraper wait between every request? (Default: 5)
 optional | `-a` | `--all` | if parsed: tv shows, videos and games get crawled
 optional | `-r`| `--recursive`| if parsed: crawler tries five additional times to call scraper in case of urllib Error -3
+
+imdbRefAnalyzer.py
+condition | argument (short) | argument (long) | comment
+--------- | ---------------- | --------------- | -------
+optional | `-h`| `--help` | show documentary
+optional | `-p` | `--print` | prints the top n movies, with the most connections in descending order
