@@ -1,5 +1,6 @@
 import csv
 import sys
+import sqlite3
 from ast import literal_eval
 from crawler import acc_csv
 from analyzer import functions
@@ -28,3 +29,16 @@ def getWeight(link):
   maxYear = getMaxYear()
   dif = maxYear - year
   #develope weight
+
+def updateDB():
+    con = sqlite3.connect('data.db')
+    cur = con.cursor()
+    cur.execute("DROP TABLE IF EXISTS reference;")
+    cur.execute("CREATE TABLE reference (name, connections, count, link, weight);")
+    
+    with open('data.csv', 'rb') as fileData:
+      dr = csv.DictReader(fileData, delimiter=';')
+      to_dr = [(i[0], i[1], i[2], i[3], getWeight(i[3]) for i in dr]
+    
+    cur.executemany("INSERT INTO reference (name, connections, count, link, weight) VALUES (?, ?, ?, ?, ?);", to_db)
+    con.commit()
