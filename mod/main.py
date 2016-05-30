@@ -8,16 +8,24 @@ csv.field_size_limit(sys.maxsize)
 
 def getYear(link):
   row = acc_csv.getRow(link)
-  title = row[0]
-  titleNestOpenPos = title.index('(') if '(' in title else None
-  titleNestClosePos = title.index(')') if ')' in title else None
-  if titleNestOpenPos == None and titleNestClosePos == None:
-    #get year from imdb
-  elif titleNestClosPos == None:
-    year = title[titleOpenPos :]
+  if row != None:
+    title = row[0]
+    titleNestOpenPos = title.index('(') if '(' in title else None
+    titleNestClosePos = title.index(')') if ')' in title else None
+    if titleNestOpenPos == None and titleNestClosePos == None:
+      year = 0
+      #get year from imdb
+    elif titleNestClosePos == None:
+      year = title[titleNestOpenPos + 1 :]
+    else:
+      year = title[titleNestOpenPos + 1 : titleNestClosePos]
+    try:
+      iyear = int(year)
+    except:
+      iyear = 0
+    return iyear
   else:
-    year = title[titleOpenPos : titleClosePos]
-  return int(year)
+    return 0
   
 def getMaxYear():
   maxTitle = functions.getTop(1)
@@ -36,9 +44,10 @@ def updateDB():
     cur.execute("DROP TABLE IF EXISTS reference;")
     cur.execute("CREATE TABLE reference (name, connections, count, link, weight);")
     
-    with open('data.csv', 'rb') as fileData:
-      dr = csv.DictReader(fileData, delimiter=';')
-      to_dr = [(i[0], i[1], i[2], i[3], getWeight(i[3]) for i in dr]
+    with open('data.csv', 'rt') as fileData:
+      dr = csv.reader(fileData, delimiter=';')
+      
+      to_db = [(i[0], i[1], i[2], i[3], getWeight(i[3])) for i in dr]
     
     cur.executemany("INSERT INTO reference (name, connections, count, link, weight) VALUES (?, ?, ?, ?, ?);", to_db)
     con.commit()
