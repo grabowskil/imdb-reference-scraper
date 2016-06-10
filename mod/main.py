@@ -46,8 +46,8 @@ def updateDB():
     
     with open('data.csv', 'rt') as fileData:
       dr = csv.reader(fileData, delimiter=';')
-      
-      to_db = [(i[0], i[1], i[2], i[3], getWeight(i[3])) for i in dr]
+      dicts = ({'name':row[0], 'connections':row[1], 'count':row[2], 'link':row[3], 'weight':getWeight(row[3])} for row in dr)
+      to_db = ((i['name'], i['connections'], i['count'], i['link'], i['weight']) for i in dicts)
     
     cur.executemany("INSERT INTO reference (name, connections, count, link, weight) VALUES (?, ?, ?, ?, ?);", to_db)
     con.commit()
