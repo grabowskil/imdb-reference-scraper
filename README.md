@@ -12,8 +12,8 @@
 condition | argument (short) | argument (long) | comment
 --------- | ---------------- | --------------- | -------
 optional | `-h`| `--help` | show documentary
-mandatory | `-d`| `--levelDepth`| how deep should the crawler follow the link-tree? (run time increases exponentially!)
-optional | `-iL` | `--initialLink`| seed-link, from which the crawler starts scraping format: `'title/tt0000000'` (Default: Matrix)
+mandatory | `-d n`| `--levelDepth`| how deep (depth = n) should the crawler follow the link-tree? (run time increases exponentially)
+optional | `-iL` | `--initialLink`| seed-link, from which the crawler starts scraping. Format: `'title/tt0000000'` (Default: Matrix)
 optional | `-t` | `--time` | how many seconds should the scraper wait between every request? (Default: 5)
 optional | `-a` | `--all` | if parsed: tv shows, videos and games get crawled
 optional | `-r`| `--recursive`| if parsed: crawler tries five additional times to call scraper in case of urllib Error -3
@@ -22,4 +22,4 @@ optional | `-r`| `--recursive`| if parsed: crawler tries five additional times t
 condition | argument (short) | argument (long) | comment
 --------- | ---------------- | --------------- | -------
 optional | `-h`| `--help` | show documentary
-optional | `-p` | `--print` | prints the top n movies, with the most connections in descending order
+optional | `-p n` | `--print` | prints the top n movies, with the most connections in descending order
