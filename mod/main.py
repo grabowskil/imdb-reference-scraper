@@ -36,7 +36,8 @@ def getWeight(link):
   year = getYear(link)
   maxYear = getMaxYear()
   dif = maxYear - year
-  #develope weight
+  #develope weight, for testing purposes:
+  return 0
 
 def updateDB():
     con = sqlite3.connect('data.db')
