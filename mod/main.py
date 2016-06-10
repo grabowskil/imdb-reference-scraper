@@ -40,15 +40,15 @@ def getWeight(link):
   return 0
 
 def updateDB():
-    con = sqlite3.connect('data.db')
-    cur = con.cursor()
-    cur.execute("DROP TABLE IF EXISTS reference;")
-    cur.execute("CREATE TABLE reference (name, connections, count, link, weight);")
+  con = sqlite3.connect('data.db')
+  cur = con.cursor()
+  cur.execute("DROP TABLE IF EXISTS reference;")
+  cur.execute("CREATE TABLE reference (name, connections, count, link, weight);")
+  
+  with open('data.csv', 'rt') as fileData:
+    dr = csv.reader(fileData, delimiter=';')
+    dicts = ({'name':row[0], 'connections':row[1], 'count':row[2], 'link':row[3], 'weight':getWeight(row[3])} for row in dr)
+    to_db = ((i['name'], i['connections'], i['count'], i['link'], i['weight']) for i in dicts)
     
-    with open('data.csv', 'rt') as fileData:
-      dr = csv.reader(fileData, delimiter=';')
-      dicts = ({'name':row[0], 'connections':row[1], 'count':row[2], 'link':row[3], 'weight':getWeight(row[3])} for row in dr)
-      to_db = ((i['name'], i['connections'], i['count'], i['link'], i['weight']) for i in dicts)
-    
-    cur.executemany("INSERT INTO reference (name, connections, count, link, weight) VALUES (?, ?, ?, ?, ?);", to_db)
-    con.commit()
+  cur.executemany("INSERT INTO reference (name, connections, count, link, weight) VALUES (?, ?, ?, ?, ?);", to_db)
+  con.commit()
