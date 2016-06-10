@@ -13,7 +13,7 @@ condition | argument (short) | argument (long) | comment
 --------- | ---------------- | --------------- | -------
 optional | `-h`| `--help` | show documentary
 mandatory | `-d n`| `--levelDepth`| how deep (depth = n) should the crawler follow the link-tree? (run time increases exponentially)
-optional | `-iL` | `--initialLink`| seed-link, from which the crawler starts scraping. Format: `'title/tt0000000'` (Default: Matrix)
+optional | `-iL` | `--initialLink`| seed-link, from which the crawler starts scraping. Format: `'title/tt0000000'` (default: Matrix)
 optional | `-t` | `--time` | how many seconds should the scraper wait between each request? (default: 5)
 optional | `-a` | `--all` | if parsed: tv shows, videos and games get crawled
 optional | `-r`| `--recursive`| if parsed: crawler tries five additional times to call scraper in case of urllib Error -3
