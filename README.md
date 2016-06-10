@@ -1,6 +1,6 @@
 # IMDB Reference Scraper
 
-#### documentation (for v0.5-beta)
+#### documentation (for v0.7-beta)
 1. download and unzip the source-code into a path of choice
 2. open the terminal and navigate to the chosen path
 3. run the scraper by `$python3 imdbRefScraper.py [-args, ...]`
