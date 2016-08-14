@@ -3,9 +3,10 @@ import time
 from bs4 import BeautifulSoup
 from . import acc_csv
 
+
 def imdbScraper(titleLink, wait_time=5, all=False):
     div_list = []
-    if acc_csv.linkInList(titleLink) == False:
+    if acc_csv.linkInList(titleLink) is False:
         s = requests.session()
         s.keep_alive = False
         r = s.get('http://www.imdb.com' + titleLink + '/movieconnections')
@@ -17,10 +18,10 @@ def imdbScraper(titleLink, wait_time=5, all=False):
             soup = BeautifulSoup(r.text, 'lxml')
             title_tag = soup.head.title.contents
             title_str = stripTitle(str(title_tag))
-            if contExcluded(title_str) == False or all == True:
+            if contExcluded(title_str) is False or all is True:
                 print("scraper: next title '" + title_str + "'")
                 ref_heading = soup.find('a', attrs={'name':'referenced_in'})
-                if ref_heading != None:
+                if ref_heading is not None:
                     ref_divs = ref_heading.find_next_siblings('div')
                     ref_divsCount = len(ref_divs)
                     c = False
@@ -28,7 +29,7 @@ def imdbScraper(titleLink, wait_time=5, all=False):
                     for div in ref_divs:
                         cntr += 1
                         print("loading: {:.1%}".format(cntr/ref_divsCount), end='\r')
-                        if c == False:
+                        if c is False:
                             div_content = div.a.contents
                             div_href = div.a['href']
                             div_list.append([div_content, div_href])
@@ -37,7 +38,6 @@ def imdbScraper(titleLink, wait_time=5, all=False):
                     print('scraper: not referenced')
             else:
                 print('scraper: exclude')
-                
         else:
             print('request: 404')
             return '404'
@@ -57,17 +57,19 @@ def imdbScraper(titleLink, wait_time=5, all=False):
         print("scraper: known link, just parsing div_list")
         div_list = acc_csv.getDivList(titleLink)
         return div_list
-    
+
+
 def stripTitle(title):
     titleHypPos = title.index('-') if '-' in title else None
     titleNestPos = title.index('[') if '[' in title else None
-    if titleNestPos == None and titleHypPos == None:
+    if titleNestPos is None and titleHypPos is None:
         return title
-    elif titleNestPos == None:
+    elif titleNestPos is None:
         return title[: titleHypPos - 1]
     else:
-        return title[titleNestPos + 2 : titleHypPos - 1]
-        
+        return title[titleNestPos + 2: titleHypPos - 1]
+
+
 def contExcluded(div_content):
     ex_list = ['(TV Episode', '(Video', '(TV ']
     c = False
